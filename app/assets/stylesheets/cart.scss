@@ -3,6 +3,20 @@
     width: max-content;
   }
 
+  .empty-cart-message {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+
+    p {
+      margin-bottom: 10px
+    }
+
+    a {
+      color: #00751d;
+    }
+  }
+
   button.stripe-button-el span {
     border-radius: 0.25em;
     border: 0.1em solid rgba(0, 130, 29, 0.8);
