@@ -12,10 +12,11 @@ module New
     config.load_defaults 6.1
 
     # Configure HTTP Basic Authentication
-    config.middleware.insert_before(Rack::Auth::Basic) do |username, password|
-      [username, password] = [ENV['ADMIN_USERNAME'], ENV['ADMIN_PASSWORD']]
+    config.middleware.use(Rack::Auth::Basic) do |username, password|
+      username = ENV['ADMIN_USERNAME']
+      password = ENV['ADMIN_PASSWORD']
     end
-
+    
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
