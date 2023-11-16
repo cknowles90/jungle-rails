@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # 'products' = controller, 'index' = action
   root to: 'products#index' # defines the '/' - the homepage - 
   #  Ruby knows the 'parse' the special string 
-  # get '/' => 'products#index'
+  #  get '/' => 'products#index'
   
 
   resources :products, only: [:index, :show] # enpoint/pathway to /products/:id
