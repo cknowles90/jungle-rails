@@ -99,5 +99,18 @@ RSpec.describe User, type: :model do
       expect(user).to_not be_valid
       expect(user.errors.full_messages).to include("The input passwords must match")
     end
+
+    # Invalid if password is not at minimum length when account is created
+    it 'is not valid when the password is not the minimum in length required' do
+      user = User.new(
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'test@example.com',
+        password: 'pass',
+        password_confirmation: 'pass'
+      )
+      expect(user).to_not be_valid
+      expect(user.errors.full_messages).to include("Password must be at least #{User.password_length} characters long")
+    end
   end
 end
