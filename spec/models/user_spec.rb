@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   
-  descrbe 'Validations' do 
+  describe 'Validations' do 
 
     # Valid user with all required attributes
     it 'is valid with valid attributions & saves' do
@@ -20,7 +20,7 @@ RSpec.describe User, type: :model do
     end
 
     # Invalid without a first_name
-    it 'is not valid without a first_name' do
+    it 'is not valid without a first name' do
       user = User.new(
         last_name: 'Doe',
         email: 'test@example.com',
@@ -28,11 +28,11 @@ RSpec.describe User, type: :model do
         password_confirmation: 'password'
       )
       expect(user).to_not be_valid
-      expect(user.errors.full_messages).to include("First name cannont be blank")
+      expect(user.errors.full_messages).to include("First name can't be blank")
     end
 
     # Invalid without a last_name
-    it 'is not valid without a last_name' do
+    it 'is not valid without a last name' do
       user = User.new(
         first_name: 'John',
         email: 'test@example.com',
@@ -40,11 +40,11 @@ RSpec.describe User, type: :model do
         password_confirmation: 'password'
       )
       expect(user).to_not be_valid
-      expect(user.errors.full_messages).to include("Last name cannot be blank")
+      expect(user.errors.full_messages).to include("Last name can't be blank")
     end
 
     # Invalid without an email
-    it 'is not valid without a email'
+    it 'is not valid without a email' do
       user = User.new(
         first_name: 'John',
         last_name: 'Doe',
@@ -52,7 +52,7 @@ RSpec.describe User, type: :model do
         password_confirmation: 'password'
       )
       expect(user).to_not be_valid
-      expect(user.errors.full_messages).to include("Email cannot be blank")
+      expect(user.errors.full_messages).to include("Email can't be blank")
     end
 
     # Invalid with a duplicate email (case-sensitive)
@@ -71,8 +71,8 @@ RSpec.describe User, type: :model do
         password: 'different_password',
         password_confirmation: 'different_password'
       )
-      expects(user).to_not be_valid
-      expects(user.errors.full_messages).to include("Email is already in use with another account")
+      expect(user).to_not be_valid
+      expect(user.errors.full_messages).to include("Email has already been taken")
     end
 
     # Invalid without a password
@@ -84,11 +84,11 @@ RSpec.describe User, type: :model do
         password_confirmation: 'password',
       )
       expect(user).to_not be_valid
-      expect(user.errors.full_messages).to include("Password cannot be blanke")
+      expect(user.errors.full_messages).to include("Password can't be blank")
     end
 
     # Invalid if password & password_confirmation do not match
-    it 'is not valid when the confirmation_password does not match the password' do
+    it 'is not valid when the confirmation password does not match the password' do
       user = User.new(
         first_name: 'John',
         last_name: 'Doe',
@@ -97,7 +97,7 @@ RSpec.describe User, type: :model do
         password_confirmation: 'different_password'
       )
       expect(user).to_not be_valid
-      expect(user.errors.full_messages).to include("The input passwords must match")
+      expect(user.errors.full_messages).to include("Password confirmation doesn't match Password")
     end
 
     # Invalid if password is not at minimum length when account is created
@@ -110,7 +110,8 @@ RSpec.describe User, type: :model do
         password_confirmation: 'pass'
       )
       expect(user).to_not be_valid
-      expect(user.errors.full_messages).to include("Password must be at least #{User.password_length} characters long")
+      expect(user.errors.full_messages).to include("Password is too short (minimum is 8 characters)")
     end
   end
+
 end

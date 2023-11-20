@@ -6,7 +6,7 @@ RSpec.describe Product, type: :model do
 
     # Initialize a category for testing
     before(:each) do
-      @category = Categroy.create(name: 'Test Category')
+      @category = Category.create(name: 'Test Category')
     end
 
     # Valid product with all required attributes
@@ -26,12 +26,12 @@ RSpec.describe Product, type: :model do
     # Name presence validation
     it 'is not valid without a name' do
       product = Product.new(
-        price: 100.00,
+        price: 1000,
         quantity: 5,
         category: @category
       )
       expect(product.save).to be_falsey
-      expect(product.errors.full_messages).to include("Name cannot be blank")
+      expect(product.errors.full_messages).to include("Name can't be blank")
     end
 
     # Price presence validation
@@ -42,30 +42,30 @@ RSpec.describe Product, type: :model do
         category: @category
       )
       expect(product.save).to be_falsey
-      expect(product.errors.full_messages).to include("Price cannot be blank")
+      expect(product.errors.full_messages).to include("Price can't be blank")
     end
 
     # Quantity presence validation
     it 'is not valid without a quantity' do
       product = Product.new(
         name: 'Test Product',
-        price: 100.00,
+        price: 1000,
         category: @category
       )
       expect(product.save).to be_falsey
-      expect(product.errors.full_messages).to include("Quantity cannot be blank")
+      expect(product.errors.full_messages).to include("Quantity can't be blank")
     end
 
     # Category presence validation
-    it 'is not valid without a quantity' do
+    it 'is not valid without a category' do
       product = Product.new(
         name: 'Test Product',
-        price: 100.00
+        price: 1000,
         quantity: 5
       )
       expect(product.save).to be_falsey
-      expect(product.errors.full_messages).to include("Category cannot be blank")
+      expect(product.errors.full_messages).to include("Category can't be blank")
     end
-
   end
+
 end
