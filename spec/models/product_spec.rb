@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Product, type: :model do
+  
   describe 'Validations' do
 
     # Initialize a category for testing
@@ -8,14 +9,17 @@ RSpec.describe Product, type: :model do
       @category = Categroy.create(name: 'Test Category')
     end
 
-    # A Product with all fields set will save successfully
-    it 'saves successfully when all fields are set' do 
+    # Valid product with all required attributes
+    it 'is valid with valid attributes & saves' do 
       product = Product.new(
         name: 'Test Product',
         price: 100.00,
         quantity: 5,
         category: @category
       )
+      # checks if product object is 'valid'
+      expect(product).to be_valid
+           # with the product object valid, it is successfully saved to the db
       expect(product.save).to be_truthy
     end
 
