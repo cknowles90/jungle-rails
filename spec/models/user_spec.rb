@@ -114,4 +114,68 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '.authenticate_with_credentials' do
+    
+    # User should be returned if authentication is successful
+    it 'returns the user if authentication is successful' do
+      user = User.create(
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'test@example.com',
+        password: 'password',
+        password_confirmation: 'password'
+      )
+      # Authenticate with correct credentials
+      authenticated_user = User.authenticate_with_credentials('test@example.com', 'password')
+      # Authenticated user is the created user
+      expect(authenticated_user).to eq(user)
+    end
+
+    # Authentication should return nil if email is not found
+    it 'returns nil if email is not found' do 
+      authenticated_user = User.authenticate_with_credentials('nonexistent@example.com', 'password')
+      expect(authenticated_user).to be_nil
+    end
+
+    # Authetication should return nil if the password is incorrect
+    it 'returns nil if authentication fails' do
+      user = User.create(
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'test@example.com',
+        password: 'password',
+        password_confirmation: 'password'
+      )
+
+      authenticated_user = User.authenticate_with_credentials('test@example.com', 'wrong_password')
+      expect(authenticated_user).to be_nil
+    end
+
+    # Authentication should be case-insensitive for email
+    it 'is case-insensitive for email' do
+      user = User.create(
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'test@example.com',
+        password: 'password',
+        password_confirmation: 'password'
+      )
+      authenticated_user = User.authenticate_with_credentials('TEST@example.com', 'password')
+      expect(authenticated_user).to eq(user)
+    end
+
+    # Authentication should ignore leading and trailing whitespaces in email
+    it 'ignores leading and trailing whitespaces in email' do
+      user = User.create(
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'test@example.com',
+        password: 'password',
+        password_confirmation: 'password'
+      )
+      authenticated_user = User.authenticate_with_credentials('  test@example.com  ', 'password')
+      expect(authenticated_user).to eq(user)
+    end
+  end
+
 end
