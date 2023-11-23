@@ -13,16 +13,10 @@ module New
 
     # Configure HTTP Basic Authentication
     config.middleware.use(Rack::Auth::Basic) do |username, password|
-      username = ENV['ADMIN_USERNAME']
-      password = ENV['ADMIN_PASSWORD']
+      ENV['ADMIN_USERNAME'] = username
+      ENV['ADMIN_PASSWORD'] = password
+      ENV['ADMIN_USERNAME'] == username && ENV['ADMIN_PASSWORD'] == password
     end
     
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
   end
 end

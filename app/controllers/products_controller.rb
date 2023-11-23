@@ -1,19 +1,15 @@
 class ProductsController < ApplicationController
-
+  skip_before_action :authorize, only: :index
+  
   def index
-    # uses MODEL to fetch data from ('MVC' design)
+    Rails.logger.debug("Request to ProductsCotroller#index")
     @products = Product.all.order(created_at: :desc)
-    # VIEW  - located in views file
-    render :index # implicite - not
+    render :index 
   end
 
   def show
     @product = Product.find params[:id]
-    @msg = "Product_controller.rb"
     render :show
-    # render 'show' just works for this ^
-    # render 'show' also works - best for getting from other paths 'shared/show' etc
-    puts "Product_controller.rb"
   end
 
 end

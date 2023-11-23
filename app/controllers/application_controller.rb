@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def authorize
+    Rails.logger.debug("Authorize method called")
     redirect_to '/login' unless current_user
   end
 
